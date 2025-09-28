@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Album_music_toma.MainPage"
+             Title="Album Music">
+
+    <Grid BackgroundColor="#667eea">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Logo et titre -->
+        <StackLayout Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
+            <Image Source="dotnet_bot.png" 
+                   HeightRequest="120" 
+                   WidthRequest="120" 
+                   Aspect="AspectFit" />
+            <Label Text="🎵 Album Music Collection" 
+                   FontSize="32" 
+                   FontAttributes="Bold" 
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+            <Label Text="Découvrez vos artistes favoris" 
+                   FontSize="16" 
+                   TextColor="LightGray"
+                   HorizontalOptions="Center" />
+        </StackLayout>
+        
+        <!-- Bouton principal -->
+        <Button Grid.Row="1"
+                Text="🎤 Explorer les Artistes"
+                FontSize="20"
+                FontAttributes="Bold"
+                BackgroundColor="White"
+                TextColor="#667eea"
+                CornerRadius="25"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Padding="50,20"
+                Clicked="OnViewArtistsClicked">
+            <Button.Shadow>
+                <Shadow Brush="Black" Offset="0,5" Radius="10" />
+            </Button.Shadow>
+        </Button>
+        
+        <!-- Footer -->
+        <StackLayout Grid.Row="2" VerticalOptions="End" HorizontalOptions="Center" Margin="0,0,0,50">
+            <Label Text="✨ Créé avec .NET MAUI" 
+                   FontSize="12" 
+                   TextColor="LightGray"
+                   HorizontalOptions="Center" />
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

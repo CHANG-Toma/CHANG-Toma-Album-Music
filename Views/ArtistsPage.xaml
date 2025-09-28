@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="Album_music_toma.Views.ArtistsPage"
+    x:Name="Page"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:Album_music_toma.ViewModels"
+    Title="Artists">
+
+    <ContentPage.BindingContext>
+        <viewmodels:ArtistsViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Header avec gradient -->
+        <Grid Grid.Row="0" BackgroundColor="#667eea">
+            
+            <VerticalStackLayout Padding="20,40,20,20" Spacing="15">
+                <Label Text="🎤 Artistes" 
+                       FontSize="28" 
+                       FontAttributes="Bold" 
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+                
+                <SearchBar Placeholder="🔍 Rechercher un artiste..." 
+                           Text="{Binding SearchText}"
+                           BackgroundColor="White"
+                           TextColor="Black"
+                           PlaceholderColor="Gray" />
+                
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Picker Grid.Column="0"
+                            Title="🎵 Genre"
+                            ItemsSource="{Binding Genres}"
+                            SelectedItem="{Binding GenreFilter}"
+                            BackgroundColor="White"
+                            TextColor="Black" />
+                    
+                    <Picker Grid.Column="1"
+                            Title="📅 Année"
+                            ItemsSource="{Binding Years}"
+                            SelectedItem="{Binding YearFilter}"
+                            BackgroundColor="White"
+                            TextColor="Black" />
+                </Grid>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Collection des artistes -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding FilteredArtists}" 
+                        SelectionMode="Single"
+                        BackgroundColor="#f8f9fa">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="10" VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="0" 
+                           CornerRadius="20" 
+                           HasShadow="True"
+                           BackgroundColor="White"
+                           Margin="5">
+                        <Frame.Shadow>
+                            <Shadow Brush="Black" Offset="0,3" Radius="8" />
+                        </Frame.Shadow>
+                        
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="180" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Image de l'artiste -->
+                            <Frame Grid.Row="0" 
+                                   Padding="0" 
+                                   CornerRadius="20,20,0,0" 
+                                   HasShadow="False">
+                                <Image Aspect="AspectFill" 
+                                       Source="{Binding PhotoUrl}" />
+                            </Frame>
+
+                            <!-- Informations de l'artiste -->
+                            <VerticalStackLayout Grid.Row="1" 
+                                                Padding="15" 
+                                                Spacing="5"
+                                                BackgroundColor="White">
+                                <Label Text="{Binding Name}" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333"
+                                       HorizontalOptions="Center" />
+                                <Label Text="{Binding Genre}" 
+                                       FontSize="14" 
+                                       TextColor="#666"
+                                       HorizontalOptions="Center" />
+                                
+                                <Button Text="👁️ Voir détails"
+                                        BackgroundColor="#667eea"
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        CornerRadius="15"
+                                        Padding="20,8"
+                                        Margin="0,10,0,0"
+                                        Command="{Binding BindingContext.SelectArtistCommand, Source={x:Reference Page}}"
+                                        CommandParameter="{Binding}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

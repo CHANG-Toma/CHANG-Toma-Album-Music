@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="Album_music_toma.Views.VideoPlayerPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:Album_music_toma.ViewModels"
+    Title="Lecture vidéo">
+
+    <ContentPage.BindingContext>
+        <viewmodels:VideoPlayerViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Header avec bouton retour -->
+        <Grid Grid.Row="0" BackgroundColor="#667eea" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0"
+                    Text="← Retour"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    Clicked="OnBackClicked" />
+            
+            <Label Grid.Column="1" 
+                   Text="🎵 Lecture vidéo" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   TextColor="White"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+        </Grid>
+
+        <!-- WebView pour la vidéo YouTube -->
+        <WebView Grid.Row="1" 
+                 Source="{Binding VideoUrl}"
+                 BackgroundColor="Black" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="Album_music_toma.Views.SongsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:Album_music_toma.ViewModels"
+    xmlns:models="clr-namespace:Album_music_toma.Models"
+    xmlns:converters="clr-namespace:Album_music_toma.Converters"
+    Title="{Binding Album.Title}">
+
+    <ContentPage.Resources>
+        <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewmodels:SongsViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Header avec informations de l'album -->
+        <Grid Grid.Row="0" BackgroundColor="#667eea">
+            <VerticalStackLayout Padding="20,60,20,20" Spacing="15">
+                <!-- Informations de l'album -->
+                <Grid ColumnDefinitions="100,*" ColumnSpacing="20">
+                    <Frame Padding="0" 
+                           CornerRadius="15" 
+                           HasShadow="True" 
+                           HeightRequest="100" 
+                           WidthRequest="100"
+                           BackgroundColor="White">
+                        <Frame.Shadow>
+                            <Shadow Brush="Black" Offset="0,3" Radius="8" />
+                        </Frame.Shadow>
+                    </Frame>
+                    
+                    <VerticalStackLayout Grid.Column="1" 
+                                        Spacing="8" 
+                                        VerticalOptions="Center">
+                        <Label Text="{Binding Album.Title}" 
+                               FontSize="24" 
+                               FontAttributes="Bold" 
+                               TextColor="White" />
+                        <Label Text="{Binding Album.Year}" 
+                               FontSize="16" 
+                               TextColor="LightGray" />
+                        <Label Text="{Binding ArtistName}" 
+                               FontSize="14" 
+                               TextColor="LightGray" />
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Liste des chansons -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding Songs}" 
+                        BackgroundColor="#f8f9fa"
+                        SelectionMode="Single"
+                        Margin="0,0,0,10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Song">
+                    <Frame Padding="0" 
+                           CornerRadius="15" 
+                           HasShadow="True" 
+                           BackgroundColor="White"
+                           Margin="10,5">
+                        <Frame.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="6" />
+                        </Frame.Shadow>
+                        
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15" Padding="20,15">
+                            <!-- Numéro de piste -->
+                            <Label Grid.Column="0" 
+                                   Text="🎵" 
+                                   FontSize="20" 
+                                   VerticalOptions="Center" 
+                                   Opacity="0.7" />
+                            
+                            <!-- Informations de la chanson -->
+                            <VerticalStackLayout Grid.Column="1" 
+                                                VerticalOptions="Center" 
+                                                Spacing="3">
+                                <Label Text="{Binding Title}" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       LineBreakMode="TailTruncation" />
+                        <Label Text="🎵 Cliquez pour ouvrir dans YouTube" 
+                               FontSize="12" 
+                               TextColor="#7f8c8d"
+                               Opacity="0.8" />
+                            </VerticalStackLayout>
+                            
+                            <!-- Bouton de lecture amélioré -->
+                            <Button Grid.Column="2"
+                                    Text="▶️"
+                                    BackgroundColor="#27ae60"
+                                    TextColor="White"
+                                    FontSize="18"
+                                    FontAttributes="Bold"
+                                    CornerRadius="25"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PlaySongCommand}"
+                                    CommandParameter="{Binding YoutubeUrl}">
+                                <Button.Shadow>
+                                    <Shadow Brush="#27ae60" Offset="0,3" Radius="8" />
+                                </Button.Shadow>
+                            </Button>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
